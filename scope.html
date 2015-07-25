@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>logoocc</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/MyController.js"></script>
+</head>
+<body ng-app="">
+<div ng-init="name='samchen'">
+    hello {{name}}
+</div>
+
+<!--使用花括号语法时，因为浏览器需要首先加载页面，渲染它，-->
+<!--然后AngularJS才能把它解析成你期望看到的内容，所以对于首个页面中的数据绑定操作，建议采用ng-bind，以避免其未被渲染的模板被用户看到-->
+<div>
+    <p><input type="text" ng-model="me"></p>
+
+    <p>你输入的为 {{me}}</p>
+
+    <p> 输入你喜欢的电影 <input type="text" ng-model="movie"></p>
+
+    <p>你喜欢的电影是 <span ng-bind="movie"></span></p>
+</div>
+
+<div ng-init="click = false">
+    <button ng-click="click = !click">显示/隐藏</button>
+    <div ng-hide="click">
+        <p><input type="text" ng-model="clicktest"></p>
+
+        <p>Hello <span ng-bind="clicktest"></span></p>
+    </div>
+</div>
+
+<div ng-controller="MyController">
+    <p>请输入一个名字：<input type="text" ng-model="p.sex"></p>
+
+    <p>Hello <span ng-bind="p.sex"></span></p>
+</div>
+
+
+<div ng-controller="Sayhello">
+    Your name:
+    <input type="text" ng-model="username">
+    <button ng-click="sayHello()">打招呼</button>
+    <hr>
+    {{greeting}}
+</div>
+
+<div ng-init="flag = false">
+    <button ng-click="flag = !flag">我变</button>
+    <p ng-hide="flag">粗来了</p>
+
+    <p ng-hide="!flag">躲猫猫</p>
+</div>
+
+<!--ng-repeat指令，遍历一个数据集合中的每个数据元素，-->
+<!--并且加载HTML模版把数据渲染出来，当我们要向HTML容器节点中添加更多类似DOM元素的时候，使用ng-repeat是再好不过了。-->
+<div ng-init="friends = [
+   {name:'Tom', age:25},
+   {name:'Jerry', age:28},
+   {name:'Tom', age:25},
+   {name:'Jerry', age:28}]">
+
+    <table>
+        <tbody>
+        <tr ng-repeat="x in friends">
+           <td>{{'Name : '+x.name+ ', Age : '+x.age}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<!--1.过滤器uppercase、lowercase对字符串转换大、小写-->
+<div>
+    请输入: <input type="text" ng-model="i_name">
+    <p>结果为： {{ i_name | uppercase}}</p>
+</div>
+
+
+<!--filter过滤器可以过滤数组并从中选择出一个子集出来，用法是“filter:模型名称”，示例如下：-->
+<div ng-init="friends2 = [
+   {name:'tom', age:16},
+   {name:'jerry', age:20},
+   {name:'garfield', age:22}]">
+
+    <p>输入过滤:<input type="text" ng-model="name_fr"></p>
+
+    <ul style="list-style-type:none">
+        <li>姓名，年龄</li>
+        <li ng-repeat="x in friends2 | filter:name_fr">
+            {{ x.name + ' , ' + x.age }}
+        </li>
+    </ul>
+</div>
+
+
+</body>
+
+</html>
